@@ -1,0 +1,73 @@
+; ModuleID = 'testcase3.c'
+source_filename = "testcase3.c"
+target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
+target triple = "x86_64-unknown-linux-gnu"
+
+@gv = global i32 1, align 4
+@f3.b = internal global i32 6, align 4
+
+; Function Attrs: noinline nounwind optnone uwtable
+define void @f1() #0 {
+  store i32 1, i32* @gv, align 4
+  ret void
+}
+
+; Function Attrs: noinline nounwind optnone uwtable
+define void @f2() #0 {
+  %1 = alloca i32, align 4
+  store i32 5, i32* %1, align 4
+  %2 = load i32, i32* %1, align 4
+  store i32 %2, i32* @gv, align 4
+  ret void
+}
+
+; Function Attrs: noinline nounwind optnone uwtable
+define void @f3() #0 {
+  %1 = load i32, i32* @f3.b, align 4
+  store i32 %1, i32* @gv, align 4
+  ret void
+}
+
+; Function Attrs: noinline nounwind optnone uwtable
+define i32 @main() #0 {
+  %1 = alloca i32, align 4
+  %2 = alloca i32, align 4
+  %3 = alloca i32, align 4
+  store i32 0, i32* %1, align 4
+  store i32 0, i32* %2, align 4
+  store i32 1, i32* %3, align 4
+  %4 = load i32, i32* %2, align 4
+  %5 = icmp eq i32 %4, 0
+  br i1 %5, label %6, label %7
+
+; <label>:6:                                      ; preds = %0
+  call void @f1()
+  br label %13
+
+; <label>:7:                                      ; preds = %0
+  %8 = load i32, i32* %3, align 4
+  %9 = icmp eq i32 %8, 1
+  br i1 %9, label %10, label %11
+
+; <label>:10:                                     ; preds = %7
+  call void @f2()
+  br label %12
+
+; <label>:11:                                     ; preds = %7
+  call void @f3()
+  br label %12
+
+; <label>:12:                                     ; preds = %11, %10
+  br label %13
+
+; <label>:13:                                     ; preds = %12, %6
+  ret i32 0
+}
+
+attributes #0 = { noinline nounwind optnone uwtable "correctly-rounded-divide-sqrt-fp-math"="false" "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+
+!llvm.module.flags = !{!0}
+!llvm.ident = !{!1}
+
+!0 = !{i32 1, !"wchar_size", i32 4}
+!1 = !{!"clang version 5.0.0 (tags/RELEASE_500/final)"}

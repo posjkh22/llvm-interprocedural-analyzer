@@ -1,0 +1,61 @@
+[CheckSum]: 0
+ Successfully read Module:
+ Name: test.bc
+ Target triple: x86_64-unknown-linux-gnu
+
+
+ [Function]: func
+ [ARG]: (0x28ce420) (0x28ce448) 
+ [Function EntyBlackBlock]: 0x28ce480
+  [BasicBlock]: 0x28ce480
+   #Instruction OpName(0x28ce558): alloca[1] [ptr]0x28ce5a0 
+   #Instruction OpName(0x28ce5e8): alloca[1] [ptr]0x28ce5a0 
+   #Instruction OpName(0x28ce698): alloca[1] [ptr]0x28ce5a0 
+   #Instruction OpName(0x28ce710): store[2] [ptr]0x28ce420 [ptr]0x28ce558 
+   #Instruction OpName(0x28ce790): store[2] [ptr]0x28ce448 [ptr]0x28ce5e8 
+   #Instruction OpName(0x28ce7f8): load[1] [ptr]0x28ce558 
+   #Instruction OpName(0x28ce858): load[1] [ptr]0x28ce7f8 
+   #Instruction OpName(0x28ce8d0): store[2] [ptr]0x28ce858 [ptr]0x28ce698 
+   #Instruction OpName(0x28ce938): load[1] [ptr]0x28ce558 
+   #Instruction OpName(0x28cea40): store[2] [ptr]0x28ce510 [ptr]0x28ce938 
+   #Instruction OpName(0x28ceaa8): load[1] [ptr]0x28ce698 
+   #Instruction OpName(0x28ceb08): load[1] [ptr]0x28ce5e8 
+   #Instruction OpName(0x28ceb80): add[2] [ptr]0x28ceaa8 [ptr]0x28ceb08 
+   #Instruction OpName(0x28cebd8): ret[1] [ptr]0x28ceb80 
+    [return!]
+
+
+
+ [Function]: main
+ [ARG]: 
+ [Function EntyBlackBlock]: 0x28cec70
+  [BasicBlock]: 0x28cec70
+   #Instruction OpName(0x28cecd8): alloca[1] [ptr]0x28ce5a0 
+   #Instruction OpName(0x28ced58): alloca[1] [ptr]0x28ce5a0 
+   #Instruction OpName(0x28cede8): alloca[1] [ptr]0x28ce5a0 
+   #Instruction OpName(0x28cee60): store[2] [ptr]0x28cc030 [ptr]0x28cecd8 
+   #Instruction OpName(0x28ceee0): store[2] [ptr]0x28ce5a0 [ptr]0x28ced58 
+   #Instruction OpName(0x28cef48): load[1] [ptr]0x28ced58 
+   #Instruction OpName(0x28cf028): call[3] [ptr]0x28cecd8 [ptr]0x28cef48 [Name]func 
+   #Instruction OpName(0x28cfb28): br[1] [ptr]0x28cbfb0 
+     [branch][point to: 0x28cbfb0]
+
+  [BasicBlock]: 0x28cbfb0
+   #Instruction OpName(0x28cf100): store[2] [ptr]0x28cf028 [ptr]0x28cede8 
+   #Instruction OpName(0x28cf168): ret[1] [ptr]0x28cc030 
+    [return!]
+
+[Function Path List]
+func[1]:
+CFG:  func%0
+main[1]:
+CFG:  main%0 main%1
+
+[GPL creator]: Start! 
+[GPL creator]: The rest of process: 1
+[GPL creator]: All process is done
+[GPL creator]: Successfully done! 
+
+Generated GPL: 
+Path[0] main%0 func%0 main%1 
+

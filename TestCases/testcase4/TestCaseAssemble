@@ -1,0 +1,8 @@
+
+echo "4-1: double close (fnc1)"
+echo "4-2: No error"
+echo "4-3: No error"
+echo "4-4: No error"
+echo "4-5: double close (fn3c)"
+echo "4-6: Memory leak - fin2"
+echo "4-7: No error"
