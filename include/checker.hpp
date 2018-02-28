@@ -8,6 +8,7 @@
 #include <llvm/IR/Instruction.h>
 #include <iostream>
 #include <llvm/IR/LLVMContext.h>
+#include <fstream>
 
 #include "wBasicBlock.hpp"
 #include "wInstruction.hpp"

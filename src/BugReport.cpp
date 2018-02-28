@@ -31,7 +31,7 @@ unsigned int BugReport::returnBugLocation()
 
 }
 
-bool BugReport::showBugLocation(BugLocation* bugloc)
+bool BugReport::showBugLocation(BugLocation* bugloc, std::ofstream& fout)
 {
 
 	unsigned int LineNum = 0;
@@ -46,7 +46,12 @@ bool BugReport::showBugLocation(BugLocation* bugloc)
 		std::cout << " - Directory: " << dirname.str() << std::endl; 
 		std::cout << " - Finename: " << filename.str() << std::endl; 
 		std::cout << " - Line: " << LineNum << std::endl;
+		
+		fout << " - Directory: " << dirname.str() << std::endl; 
+		fout << " - Finename: " << filename.str() << std::endl; 
+		fout << " - Line: " << LineNum << std::endl;
 	}	
+
 
 	return true;
 }

@@ -323,10 +323,14 @@ bool Checker::BugReport(){
 	/* trace_flag check */
 	/* if the value is not set, the error is detected */
 
+	std::ofstream fout;
+	fout.open("AnalysisResults", std::ofstream::out | std::ofstream::app);
+
 	if(check_checker_state_flag() != 0 
 			&& ((type == Checker::CHECK4) || (type == Checker::CHECK5))){
 
 		std::cout << "[Checker Error]" << std::endl;
+		fout << "[Checker Error]" << std::endl;
 
 		for(auto iter = traceValState.begin();
 				iter != traceValState.end(); iter++){
@@ -338,9 +342,11 @@ bool Checker::BugReport(){
 				
 				if(type == Checker::CHECK4){
 					std::cout << " - FILE Double close";
+					fout << " - FILE Double close";
 				}
 				else if(type == Checker::CHECK5){
 					std::cout << " - Improper free";
+					fout << " - Improper free";
 				}
 				std::cout << "(" << current->traceVal << "/";
 				std::cout << *(current->checker_state_flag) << "/";
@@ -349,8 +355,16 @@ bool Checker::BugReport(){
 				std::cout << current->unique_number << ")"; 
 				std::cout << std::endl;
 				
+				fout << "(" << current->traceVal << "/";
+				fout << *(current->checker_state_flag) << "/";
+				fout << current->f->getName().str() << "/";
+				fout << current->bug_location_flag << "/";
+				fout << current->unique_number << ")"; 
+				fout << std::endl;
+				
+				
 				m_BugReport->AddBugLocation(current->Location);
-				m_BugReport->showBugLocation(current->Location);
+				m_BugReport->showBugLocation(current->Location, fout);
 			}
 
 			/*
@@ -366,9 +380,11 @@ bool Checker::BugReport(){
 
 				if(type == Checker::CHECK4){
 					std::cout << " - FILE is Not close";
+					fout << " - FILE is Not close";
 				}
 				else if(type == Checker::CHECK5){
 					std::cout << " - Allocated Memory is Not freed";
+					fout << " - Allocated Memory is Not freed";
 				}
 				std::cout << "(" << current->traceVal << "/";
 				std::cout << *(current->checker_state_flag) << "/";
@@ -378,8 +394,16 @@ bool Checker::BugReport(){
 				std::cout << ")";
 				std::cout << std::endl;
 				
+				fout << "(" << current->traceVal << "/";
+				fout << *(current->checker_state_flag) << "/";
+				fout << current->f->getName().str() << "/";
+				fout << current->bug_location_flag << "/";
+				fout << current->unique_number;
+				fout << ")";
+				fout << std::endl;
+				
 				m_BugReport->AddBugLocation(current->Location);	
-				m_BugReport->showBugLocation(current->Location);
+				m_BugReport->showBugLocation(current->Location, fout);
 
 			}
 
@@ -389,7 +413,10 @@ bool Checker::BugReport(){
 	/* If error is not found */
 	else{
 		std::cout << "[No Error Code was Found] " << std::endl;
+		fout << "[No Error Code was Found] " << std::endl;
 	}
+
+	fout.close();
 
 	return true;
 }

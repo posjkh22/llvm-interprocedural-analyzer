@@ -7,6 +7,7 @@
 #include <llvm/IR/Instruction.h>
 #include <llvm/IR/Function.h>
 #include <llvm/IR/DebugInfoMetadata.h>
+#include <fstream>
 
 /*
 typedef struct
@@ -38,7 +39,7 @@ public:
 	unsigned int returnBugLocation();
 	
 	bool showBugLocation();
-	bool showBugLocation(BugLocation* );
+	bool showBugLocation(BugLocation* , std::ofstream&);
 
 private:
 	BugLocationList m_BugLocationList;
