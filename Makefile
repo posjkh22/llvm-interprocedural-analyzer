@@ -4,7 +4,7 @@ INCLUDE			=./include
 BIT				=./bitcode
 TESTCASE		= ./TestCases
 TESTCLASS 		= testcase5
-TEST			= testcase5-9
+TEST			= testcase5-6
 OPTION 			= --target=Linux
 THREAD1			= --thread=Unithread
 THREAD2			= --thread=Multithread
