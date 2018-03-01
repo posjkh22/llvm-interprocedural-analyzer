@@ -25,14 +25,21 @@ std::list<Path *> *PathList::getPathList(){
 bool PathList::ShowPathList(){
 
 	std::list<Path *>::iterator iter1;
+	
+	std::ofstream fout;
+	fout.open("AnalysisPaths", std::ofstream::out);
 
 	for(iter1 = PathListPtr->begin(); iter1 != PathListPtr->end(); iter1++){ 
 
 		Path *current_path = (*iter1);
 
 		std::cout << "Path" << *(current_path->getName()) << " ";
+		fout << "Path" << *(current_path->getName()) << " ";
 		current_path->ShowPath();
+		current_path->ShowPath(fout);
 	}
+
+	fout.close();
 
 	return true;
 }
@@ -253,10 +260,30 @@ bool Path::ShowPath(){
 	for(iter = PathPtr->begin(); iter != PathPtr->end(); iter++){
 	
 		wBasicBlock *bb = (*iter);
-		std::cout << *(bb->getName()) << " ";
+		std::cout << *(bb->getName()) << " -> ";
 	}
 	std::cout << std::endl;
 
 	return true;
 }
 
+bool Path::ShowPath(std::ofstream& fout){
+	
+	std::list<wBasicBlock *>::iterator iter;
+
+	for(iter = PathPtr->begin(); iter != PathPtr->end(); iter++){
+	
+		wBasicBlock *bb = (*iter);
+
+		/* why? only llvm.dbg.declare%0 ? */
+		if(*(bb->getName()) == "llvm.dbg.declare%0")
+		{
+			continue;
+		}
+		std::cout << *(bb->getName()) << " -> ";
+		fout << *(bb->getName()) << " -> ";
+	}
+	std::cout << std::endl;
+
+	return true;
+}

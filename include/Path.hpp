@@ -8,7 +8,7 @@
 #include <iostream>
 #include <llvm/IR/LLVMContext.h>
 #include "wBasicBlock.hpp"
-
+#include <fstream>
 
 using namespace llvm;
 
@@ -68,6 +68,7 @@ public:
 	bool deleteNextNumberInCallBBList(unsigned int);
 	
 	bool ShowPath();
+	bool ShowPath(std::ofstream&);
 	void ShowCallBBList();
 
 };
