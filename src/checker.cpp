@@ -329,8 +329,8 @@ bool Checker::BugReport(){
 	if(check_checker_state_flag() != 0 
 			&& ((type == Checker::checker_ty::FilePointerAnalysisC) || (type == Checker::checker_ty::MemoryAllocationC))){
 
-		std::cout << "[Checker Error]" << std::endl;
-		fout << "[Checker Error]" << std::endl;
+		std::cout << "[Checker: Error Detected]" << std::endl;
+		fout << "[Checker: Error Detected]" << std::endl;
 
 		for(auto iter = traceValState.begin();
 				iter != traceValState.end(); iter++){

@@ -260,7 +260,13 @@ bool Path::ShowPath(){
 	for(iter = PathPtr->begin(); iter != PathPtr->end(); iter++){
 	
 		wBasicBlock *bb = (*iter);
-		std::cout << *(bb->getName()) << " -> ";
+		
+		/* why? only llvm.dbg.declare%0 ? A. non-traverse function only have one BB(%0) */
+		if(*(bb->getName()) == "llvm.dbg.declare%0")
+		{
+			continue;
+		}
+		std::cout << " -> " << *(bb->getName());
 	}
 	std::cout << std::endl;
 
@@ -275,13 +281,13 @@ bool Path::ShowPath(std::ofstream& fout){
 	
 		wBasicBlock *bb = (*iter);
 
-		/* why? only llvm.dbg.declare%0 ? */
+		/* why? only llvm.dbg.declare%0 ? A. non-traverse function only have one BB(%0) */
 		if(*(bb->getName()) == "llvm.dbg.declare%0")
 		{
 			continue;
 		}
-		std::cout << *(bb->getName()) << " -> ";
-		fout << *(bb->getName()) << " -> ";
+		std::cout << " -> " << *(bb->getName());
+		fout << " -> " << *(bb->getName());
 	}
 	std::cout << std::endl;
 

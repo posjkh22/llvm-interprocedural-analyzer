@@ -46,9 +46,34 @@ bool BugReport::showBugLocation(BugLocation* bugloc, std::ofstream& fout)
 		std::cout << " - Directory: " << dirname.str() << std::endl; 
 		std::cout << " - Finename: " << filename.str() << std::endl; 
 		std::cout << " - Line: " << LineNum << std::endl;
+	
+		std::string dirnameStr(dirname.str());
+		std::string filenameStr(filename.str());
+
 		
+		std::string dirnameOnlyStr = dirnameStr.substr(dirnameStr.find("/") + 1);
+		std::string tmp_dirnameOnlyStr;
+		std::string comp_dirnameOnlyStr;
+		while(tmp_dirnameOnlyStr != (dirnameOnlyStr = dirnameOnlyStr.substr(dirnameOnlyStr.find("/") + 1)))
+		{
+			tmp_dirnameOnlyStr = dirnameOnlyStr;
+			//comp_dirnameOnlyStr = dirnameOnlyStr;
+		}
+
+		std::string filenameOnlyStr = filenameStr.substr(filenameStr.find("/") + 1);
+		std::string tmp_filenameOnlyStr;
+		while(tmp_filenameOnlyStr != (filenameOnlyStr = filenameOnlyStr.substr(filenameOnlyStr.find("/") + 1)))
+		{
+			tmp_filenameOnlyStr = filenameOnlyStr;
+		}
+		
+		/*
 		fout << " - Directory: " << dirname.str() << std::endl; 
 		fout << " - Finename: " << filename.str() << std::endl; 
+		*/
+
+		fout << " - Directory: " << dirnameOnlyStr << std::endl; 
+		fout << " - Finename: " << filenameOnlyStr << std::endl; 
 		fout << " - Line: " << LineNum << std::endl;
 	}	
 

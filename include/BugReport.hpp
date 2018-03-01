@@ -8,6 +8,7 @@
 #include <llvm/IR/Function.h>
 #include <llvm/IR/DebugInfoMetadata.h>
 #include <fstream>
+#include <string>
 
 /*
 typedef struct
