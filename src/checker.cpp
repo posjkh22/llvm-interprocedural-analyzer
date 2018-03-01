@@ -365,6 +365,8 @@ bool Checker::BugReport(){
 				
 				m_BugReport->AddBugLocation(current->Location);
 				m_BugReport->showBugLocation(current->Location, fout);
+				
+				fout << " - BasicBlock: " << *(current->LocationBB->getName());
 			}
 
 			/*
@@ -405,6 +407,7 @@ bool Checker::BugReport(){
 				m_BugReport->AddBugLocation(current->Location);	
 				m_BugReport->showBugLocation(current->Location, fout);
 
+				fout << " - BasicBlock: " << *(current->LocationBB->getName());
 			}
 
 		}
@@ -861,6 +864,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 				TraceData *new_trace_data
 					= new TraceData(new_traceVal, checker_state_flag, fid);	
 
+				new_trace_data->LocationBB = BB;
 				new_trace_data->Location = bare_inst;
 				new_trace_data->bug_location_flag = 1;
 				new_trace_data->unique_number = -1;
@@ -901,6 +905,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 			
 				trace_data->setUniqueNumber(this);
 
+				trace_data->LocationBB = BB;
 				trace_data->Location = bare_inst;
 				traceValState.push_back(trace_data);
 				trace_flag = 1;
@@ -926,7 +931,8 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 						= new TraceData(traceVal, checker_state_flag, fid);				
 				
 					trace_data->setUniqueNumber(this);
-				
+			
+					trace_data->LocationBB = BB;
 					trace_data->Location = bare_inst;
 					traceValState.push_back(trace_data);
 					trace_flag = 1;
@@ -1058,6 +1064,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 
 							TraceData *new_trace_data 
 								= new TraceData(new_traceVal, checker_state_flag, fid, unique_number);
+							new_trace_data->LocationBB = BB;
 							new_trace_data->Location = bare_inst;
 							traceValState.push_back(new_trace_data);
 								
@@ -1131,6 +1138,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 #endif
 					TraceData *trace_data
 						= new TraceData(new_traceVal, checker_state_flag, fid, unique_number);	
+					trace_data->LocationBB = BB;
 					trace_data->Location = bare_inst;
 					traceValState.push_back(trace_data);
 
@@ -1248,6 +1256,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 					TraceData *new_trace_data
 						= new TraceData(new_traceVal, checker_state_flag, fid);
 
+					new_trace_data->LocationBB = BB;
 					new_trace_data->Location = bare_inst;
 					new_trace_data->bug_location_flag = 1;
 					new_trace_data->unique_number = -1;
@@ -1291,7 +1300,8 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 
 					TraceData *trace_data
 						= new TraceData(new_traceVal, checker_state_flag, fid);
-					
+				
+					trace_data->LocationBB = BB;
 					trace_data->Location = bare_inst;
 					PassingReturnVal.push_back(trace_data);
 #ifdef DEBUG_CHECKER				
@@ -1365,6 +1375,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 
 				TraceData *trace_data
 					= new TraceData(new_traceVal, checker_state_flag, fid, unique_number);
+				trace_data->LocationBB = BB;
 				trace_data->Location = bare_inst;
 				traceValState.push_back(trace_data);
 
@@ -1404,6 +1415,7 @@ bool Checker::check5(wBasicBlock *BB, wInstruction *Inst){
 
 				TraceData *trace_data
 					= new TraceData(new_traceVal, checker_state_flag, fid, unique_number);
+				trace_data->LocationBB = BB;
 				trace_data->Location = bare_inst;
 				traceValState.push_back(trace_data);
 

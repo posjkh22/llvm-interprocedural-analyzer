@@ -1,5 +1,6 @@
 [Checker: Error Detected]
- - Improper free(0x1a9f1b8/-1/main/1/0)
+ - Improper free(0x12fe1b8/-1/main/1/0)
  - Directory: testcase5
  - Finename: testcase5-6.c
  - Line: 46
+ - BasicBlock: main%11

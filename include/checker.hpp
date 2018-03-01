@@ -56,12 +56,13 @@ public:
 	public:
 		Value *traceVal;
 		llvm::Instruction* Location;
+		wBasicBlock* LocationBB; 
 		int *checker_state_flag;
 		int bug_location_flag;
 		int return_update_flag;
 		int unique_number;
 		llvm::Function *f;
-			
+
 		TraceData(Value *tVal, int *tStatef, llvm::Function *F, 
 				int uNumber){
 			traceVal = tVal;

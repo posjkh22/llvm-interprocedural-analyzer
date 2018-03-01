@@ -42,6 +42,8 @@ private:
 
 public:
 	wBasicBlock():hasFunctionCall(false){}
+	
+public:
 	bool setName(std::string);
 	std::string *getName();
 	bool setwBasicBlock(BasicBlock *);
