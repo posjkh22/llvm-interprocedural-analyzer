@@ -5,15 +5,18 @@ BIT				=./bitcode
 TESTCASE		= ./TestCases
 TESTCLASS 		= testcase5
 TEST			= testcase5-6
-OPTION 			= --target=Linux
-THREAD1			= --thread=Unithread
-THREAD2			= --thread=Multithread
+TARGET_OPTION 	= --target=Linux
+THREAD_OPTION1	= --thread=Unithread
+THREAD_OPTION2	= --thread=Multithread
+ANALYSIS_OPTION	= --analysis=MemoryAllocationC
+#ANALYSIS_OPTION	= --analysis=Deadlock
+
 
 run: all
 	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc > test_out
 
 run2: 
-	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(OPTION) $(THREAD1)
+	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(TARGET_OPTION) $(THREAD_OPTION1) $(ANALYSIS_OPTION)
 
 
 all: clean main Support ArgumentPass TaskManager IRcodeData IRcodeTextDataSet wFunction wBasicBlock wInstruction path pathImpl checker BugReport

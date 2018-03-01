@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 	arg.showArgument();
 
 	/* IRParser */
-	StringRef filename = argv[3];
+	StringRef filename = argv[argc-1];
 	LLVMContext context;
 	SMDiagnostic error;
 	std::unique_ptr<Module> m = parseIRFile(filename, error, context);
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
 	
 		IPA::BugReport brp;
 
-		Checker checker(&brp);
+		Checker checker(&brp, &arg);
 		checker.check(&m_PathList);
 		
 		//brp.showBugLocation();

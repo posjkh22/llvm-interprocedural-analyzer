@@ -324,10 +324,10 @@ bool Checker::BugReport(){
 	/* if the value is not set, the error is detected */
 
 	std::ofstream fout;
-	fout.open("AnalysisResults", std::ofstream::out | std::ofstream::app);
+	fout.open("AnalysisResults", std::ofstream::out);
 
 	if(check_checker_state_flag() != 0 
-			&& ((type == Checker::CHECK4) || (type == Checker::CHECK5))){
+			&& ((type == Checker::checker_ty::FilePointerAnalysisC) || (type == Checker::checker_ty::MemoryAllocationC))){
 
 		std::cout << "[Checker Error]" << std::endl;
 		fout << "[Checker Error]" << std::endl;
@@ -340,11 +340,11 @@ bool Checker::BugReport(){
 			if(*(current->checker_state_flag) < 0 
 					&& current->bug_location_flag == 1){
 				
-				if(type == Checker::CHECK4){
+				if(type == Checker::checker_ty::FilePointerAnalysisC){
 					std::cout << " - FILE Double close";
 					fout << " - FILE Double close";
 				}
-				else if(type == Checker::CHECK5){
+				else if(type == Checker::checker_ty::MemoryAllocationC){
 					std::cout << " - Improper free";
 					fout << " - Improper free";
 				}
@@ -378,11 +378,11 @@ bool Checker::BugReport(){
 				
 				){
 
-				if(type == Checker::CHECK4){
+				if(type == Checker::checker_ty::FilePointerAnalysisC){
 					std::cout << " - FILE is Not close";
 					fout << " - FILE is Not close";
 				}
-				else if(type == Checker::CHECK5){
+				else if(type == Checker::checker_ty::MemoryAllocationC){
 					std::cout << " - Allocated Memory is Not freed";
 					fout << " - Allocated Memory is Not freed";
 				}
@@ -493,6 +493,63 @@ bool Checker::check(Path *path){
 	return true;
 }
 
+Checker::Checker(IPA::BugReport *bugReport, IPA::ArgumentPass *argument)
+{
+	trace_flag = 0;
+	trace_new_func_flag = 0;
+	basic_checker_state_flag = 0;
+	reset_flag = 1;
+	//checker_state_flag = 0;
+	//traceVal = nullptr;
+	m_BugReport = bugReport;
+	m_ArgumentPass = argument;
+
+	checkerTyDetermination();
+};
+
+
+bool Checker::checkerTyDetermination()
+{
+	if(m_ArgumentPass->getArgument()->getAnalysisTy() 
+			== IPA::Argument::analysisTy::MemoryAllocationC)
+	{
+		setCheckerTy(Checker::checker_ty::MemoryAllocationC);	
+	}
+	else if(m_ArgumentPass->getArgument()->getAnalysisTy() 
+			== IPA::Argument::analysisTy::FilePointerAnalysisC)
+	{
+		setCheckerTy(Checker::checker_ty::FilePointerAnalysisC);	
+	}
+	else if(m_ArgumentPass->getArgument()->getAnalysisTy() 
+			== IPA::Argument::analysisTy::Deadlock)
+	{
+		setCheckerTy(Checker::checker_ty::Deadlock);	
+	}
+	else if(m_ArgumentPass->getArgument()->getAnalysisTy() 
+			== IPA::Argument::analysisTy::SemaphoreIntegrity)
+	{
+		setCheckerTy(Checker::checker_ty::SemaphoreIntegrity);	
+	}
+	else if(m_ArgumentPass->getArgument()->getAnalysisTy() 
+			== IPA::Argument::analysisTy::SharedVariables)
+	{
+		setCheckerTy(Checker::checker_ty::SharedVariables);	
+	}
+	else if(m_ArgumentPass->getArgument()->getAnalysisTy() 
+			== IPA::Argument::analysisTy::SharedFunctions)
+	{
+		setCheckerTy(Checker::checker_ty::SharedFunctions);	
+	}
+	else 
+	{
+		setCheckerTy(Checker::checker_ty::UnknownCheckerTy);	
+		return false;
+	}
+
+	return true;
+}
+
+
 bool Checker::check(wBasicBlock *BB){
 
 	std::list<wInstruction *>::iterator iter;
@@ -510,9 +567,9 @@ bool Checker::check(wBasicBlock *BB){
 		//check1(BB, currentInst);
 		//check2(BB, currentInst, comp_gv);
 		//check3(BB, currentInst, comp_gv);
-		//setCheckerTy(Checker::CHECK4);
+		//setCheckerTy(Checker::checker_ty::FilePointerAnalysisC);
 		//check4(BB, currentInst); 
-		setCheckerTy(Checker::CHECK5);
+		//setCheckerTy(Checker::checker_ty::MemoryAllocationC);
 		check5(BB, currentInst); 
 	}
 

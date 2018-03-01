@@ -29,15 +29,30 @@ public:
 		UnknownThreadTy
 	} threadTy;
 
+	typedef enum
+	{
+		MemoryAllocationC,
+		FilePointerAnalysisC,
+		Deadlock,
+		SemaphoreIntegrity,
+		SharedVariables,
+		SharedFunctions,
+		UnknownAnalysisTy
+	} analysisTy;
+
 public:
 	bool setTargetTy(Argument::targetTy);
 	bool setThreadTy(Argument::threadTy);
+	bool setAnalysisTy(Argument::analysisTy);
 	Argument::targetTy getTargetTy();
 	Argument::threadTy getThreadTy();
+	Argument::analysisTy getAnalysisTy();
+
 
 private:
 	targetTy TargetTy;
 	threadTy ThreadTy;
+	analysisTy AnalysisTy;
 };
 
 class ArgumentPass

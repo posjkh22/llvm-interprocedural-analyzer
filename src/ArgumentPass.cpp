@@ -9,10 +9,11 @@
 
 using namespace IPA;
 
-option longopts[3] = {
+option longopts[4] = {
 
 	{"target", 1, NULL, 't'},
 	{"thread", 1, NULL, 'x'},
+	{"analysis", 1, NULL, 'a'}, 
 	{"debug", 0, NULL, 'd'}
 };
 
@@ -70,6 +71,42 @@ bool ArgumentPass::processArguPass(int argc, char *argv[])
 		
 				break;
 
+
+			case 'a':
+
+				if(!strcmp((char* )optarg,"MemoryAllocationC"))
+				{
+					argument.setAnalysisTy(Argument::analysisTy::MemoryAllocationC);
+				}
+				else if(!strcmp((char* )optarg, "FilePointerAnalysisC"))
+				{
+					argument.setAnalysisTy(Argument::analysisTy::FilePointerAnalysisC);		
+				}
+				else if(!strcmp((char* )optarg, "Deadlock"))
+				{
+					argument.setAnalysisTy(Argument::analysisTy::Deadlock);		
+				}
+				else if(!strcmp((char* )optarg, "SemaphoreIntegrity"))
+				{
+					argument.setAnalysisTy(Argument::analysisTy::SemaphoreIntegrity);		
+				}
+				else if(!strcmp((char* )optarg, "SharedVariables"))
+				{
+					argument.setAnalysisTy(Argument::analysisTy::SharedVariables);
+				}
+				else if(!strcmp((char* )optarg, "SharedFunctions"))
+				{
+					argument.setAnalysisTy(Argument::analysisTy::SharedFunctions);
+				}
+				else
+				{
+					std::cout << "unknown ThreadTy" << std::endl;
+					argument.setAnalysisTy(Argument::analysisTy::UnknownAnalysisTy);
+				}
+		
+				break;
+
+
 			case 'd':
 				std::cout << "debug" << std::endl;
 				break;
@@ -105,6 +142,13 @@ bool Argument::setThreadTy(Argument::threadTy type)
 	return true;
 }
 
+bool Argument::setAnalysisTy(Argument::analysisTy type)
+{
+	AnalysisTy = type;
+	return true;
+}
+
+
 Argument::targetTy Argument::getTargetTy()
 {
 	return TargetTy;
@@ -115,11 +159,17 @@ Argument::threadTy Argument::getThreadTy()
 	return ThreadTy;
 }
 
+Argument::analysisTy Argument::getAnalysisTy()
+{
+	return AnalysisTy;
+}
+
 
 bool ArgumentPass::showArgument()
 {
 	std::cout << "[Argument Info]" << std::endl;
 
+	// OSTy //
 	if(argument.getTargetTy() == Argument::targetTy::Linux)
 	{
 		std::cout << "TargetTy: Linux" << std::endl;
@@ -141,6 +191,7 @@ bool ArgumentPass::showArgument()
 		std::cout << "TargetTy: Unknown Target" << std::endl;
 	}
 	
+	// ThreadTy //
 	if(argument.getThreadTy() == Argument::threadTy::MultiThread)
 	{
 		std::cout << "ThreadTy: Multi-thread"  << std::endl;
@@ -153,6 +204,37 @@ bool ArgumentPass::showArgument()
 	{
 		std::cout << "ThreadTy: Unknown threadTy" << std::endl;
 	}
+
+	// AnalysisTy //
+	if(argument.getAnalysisTy() == Argument::analysisTy::MemoryAllocationC)
+	{
+		std::cout << "AnalysisTy: MemoryAllocationC" << std::endl;
+	}
+	else if(argument.getAnalysisTy() == Argument::analysisTy::FilePointerAnalysisC)
+	{
+		std::cout << "AnalysisTy: FilePointerAnalysisC" << std::endl;
+	}
+	else if(argument.getAnalysisTy() == Argument::analysisTy::Deadlock)
+	{
+		std::cout << "AnalysisTy: Deadlock" << std::endl;
+	}
+	else if(argument.getAnalysisTy() == Argument::analysisTy::SemaphoreIntegrity)
+	{
+		std::cout << "AnalysisTy: SemaphoreIntegrity" << std::endl;
+	}
+	else if(argument.getAnalysisTy() == Argument::analysisTy::SharedVariables)
+	{
+		std::cout << "AnalysisTy: SharedVariables" << std::endl;
+	}
+	else if(argument.getAnalysisTy() == Argument::analysisTy::SharedFunctions)
+	{
+		std::cout << "AnalysisTy: SharedFunctions" << std::endl;
+	}
+	else 
+	{
+		std::cout << "AnalysisTy: UnknownAnalysisTy" << std::endl;
+	}
+
 
 	std::cout << std::endl;
 

@@ -15,7 +15,7 @@
 #include "Path.hpp"
 #include "PathImpl.hpp"
 #include "BugReport.hpp"
-
+#include "ArgumentPass.hpp"
 
 using namespace llvm;
 
@@ -40,7 +40,14 @@ public:
 		CHECK2,
 		CHECK3,
 		CHECK4,
-		CHECK5
+		CHECK5,
+		MemoryAllocationC,
+		FilePointerAnalysisC,
+		Deadlock,
+		SemaphoreIntegrity,
+		SharedVariables,
+		SharedFunctions,
+		UnknownCheckerTy
 	}checker_ty;
 
 	class TraceData
@@ -114,9 +121,9 @@ public:
 	};
 	*/
 
-
 private:
 	IPA::BugReport *m_BugReport;
+	IPA::ArgumentPass *m_ArgumentPass;
 
 private:
 	checker_ty type;
@@ -135,18 +142,9 @@ private:
 
 
 public:
-	Checker(IPA::BugReport *bugReport)
-	{
-		trace_flag = 0;
-		trace_new_func_flag = 0;
-		basic_checker_state_flag = 0;
-		reset_flag = 1;
-		//checker_state_flag = 0;
-		//traceVal = nullptr;
+	Checker(IPA::BugReport *bugReport, IPA::ArgumentPass *argument);
 
-		m_BugReport = bugReport;
-	};
-
+	bool checkerTyDetermination();
 
 	bool setCheckerTy(checker_ty ty);
 	TraceData *SearchTraceVal(unsigned int iter_count);
