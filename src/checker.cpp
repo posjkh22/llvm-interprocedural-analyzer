@@ -324,7 +324,7 @@ bool Checker::BugReport(){
 	/* if the value is not set, the error is detected */
 
 	std::ofstream fout;
-	fout.open("AnalysisResults", std::ofstream::out);
+	fout.open("AnalysisResults", std::ofstream::out | std::ofstream::app);
 
 	if(check_checker_state_flag() != 0 
 			&& ((type == Checker::checker_ty::FilePointerAnalysisC) || (type == Checker::checker_ty::MemoryAllocationC))){
@@ -449,10 +449,19 @@ bool Checker::check(PathList *pathlist){
 
 bool Checker::check(Path *path){
 
+	std::ofstream fout;
+	fout.open("AnalysisResults", std::ofstream::out | std::ofstream::app);
+	
 	std::cout << std::endl;
 	std::cout << "[Checker is running on Path ";
 	std::cout << *(path->getName());
 	std::cout << "..]" << std::endl;
+	
+	fout << "[Checker is running on Path ";
+	fout << *(path->getName());
+	fout << "..]" << std::endl;
+
+	fout.close();
 
 	/* Initialize CheckerState */
 	setCheckerState();
