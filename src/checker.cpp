@@ -367,6 +367,7 @@ bool Checker::BugReport(){
 				m_BugReport->showBugLocation(current->Location, fout);
 				
 				fout << " - BasicBlock: " << *(current->LocationBB->getName());
+				fout << std::endl << std::endl;
 			}
 
 			/*
@@ -408,6 +409,7 @@ bool Checker::BugReport(){
 				m_BugReport->showBugLocation(current->Location, fout);
 
 				fout << " - BasicBlock: " << *(current->LocationBB->getName());
+				fout << std::endl << std::endl;
 			}
 
 		}

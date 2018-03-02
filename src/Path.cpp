@@ -27,7 +27,7 @@ bool PathList::ShowPathList(){
 	std::list<Path *>::iterator iter1;
 	
 	std::ofstream fout;
-	fout.open("AnalysisPaths", std::ofstream::out);
+	fout.open("AnalysisPaths", std::ofstream::out | std::ofstream::app);
 
 	for(iter1 = PathListPtr->begin(); iter1 != PathListPtr->end(); iter1++){ 
 
@@ -37,6 +37,7 @@ bool PathList::ShowPathList(){
 		fout << "Path" << *(current_path->getName()) << " ";
 		current_path->ShowPath();
 		current_path->ShowPath(fout);
+		fout << std::endl << std::endl;
 	}
 
 	fout.close();

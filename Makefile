@@ -3,8 +3,8 @@ LIB				=./lib
 INCLUDE			=./include
 BIT				=./bitcode
 TESTCASE		= ./TestCases
-TESTCLASS 		= testcase5
-TEST			= testcase5-6
+TESTCLASS 		= testcase7
+TEST			= testcase7-11
 TARGET_OPTION 	= --target=Linux
 THREAD_OPTION1	= --thread=Unithread
 THREAD_OPTION2	= --thread=Multithread
@@ -16,7 +16,7 @@ run: all
 	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc > test_out
 
 run2: 
-	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(TARGET_OPTION) $(THREAD_OPTION1) $(ANALYSIS_OPTION)
+	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(TARGET_OPTION) $(THREAD_OPTION2) $(ANALYSIS_OPTION)
 
 
 all: clean main Support ArgumentPass TaskManager IRcodeData IRcodeTextDataSet wFunction wBasicBlock wInstruction path pathImpl checker BugReport
@@ -128,4 +128,4 @@ BugReport:
 	`llvm-config --cxxflags`
 
 clean:
-	rm -f test test_out $(LIB)/*.o
+	rm -f test test_out $(LIB)/*.o Analysis*
