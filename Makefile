@@ -1,7 +1,7 @@
+OUTPUT 			= code_analysis
 SRC				=./src
 LIB				=./lib
 INCLUDE			=./include
-BIT				=./bitcode
 TESTCASE		= ./TestCases
 TESTCLASS 		= testcase7
 TEST			= testcase7-11
@@ -9,14 +9,13 @@ TARGET_OPTION 	= --target=Linux
 THREAD_OPTION1	= --thread=Unithread
 THREAD_OPTION2	= --thread=Multithread
 ANALYSIS_OPTION	= --analysis=MemoryAllocationC
-#ANALYSIS_OPTION	= --analysis=Deadlock
 
 
 run: all
-	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc > test_out
+	./$(OUTPUT) $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(TARGET_OPTION) $(THREAD_OPTION2) $(ANALYSIS_OPTION)
 
 run2: 
-	./test $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(TARGET_OPTION) $(THREAD_OPTION2) $(ANALYSIS_OPTION)
+	./$(OUTPUT) $(TESTCASE)/$(TESTCLASS)/$(TEST).bc $(TARGET_OPTION) $(THREAD_OPTION2) $(ANALYSIS_OPTION)
 
 
 all: clean main Support ArgumentPass TaskManager IRcodeData IRcodeTextDataSet wFunction wBasicBlock wInstruction path pathImpl checker BugReport
@@ -34,7 +33,7 @@ all: clean main Support ArgumentPass TaskManager IRcodeData IRcodeTextDataSet wF
 	$(LIB)/PathImpl.o \
 	$(LIB)/checker.o \
 	$(LIB)/BugReport.o \
-	-o test \
+	-o $(OUTPUT) \
 	`llvm-config --cxxflags --libs --ldflags --system-libs`
 	
 main:
@@ -128,4 +127,4 @@ BugReport:
 	`llvm-config --cxxflags`
 
 clean:
-	rm -f test test_out $(LIB)/*.o Analysis*
+	rm -f $(OUTPUT) test_out $(LIB)/*.o Analysis*
